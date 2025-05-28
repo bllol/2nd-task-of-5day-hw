@@ -43,6 +43,11 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		Message: message,
 	}
 
+	if fullName == "" || email == "" || message == "" {
+		http.Error(w, "All fields are required", http.StatusBadRequest)
+		return
+	}
+
 	err := templates.ExecuteTemplate(w, "submit.html", user)
 	if err != nil {
 		http.Error(w, "Template execution is failed", http.StatusInternalServerError)
